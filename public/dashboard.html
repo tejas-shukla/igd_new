@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Dashboard – Track Your Launch | Igotdomain</title>
+<meta name="description" content="Your Igotdomain dashboard: live Business Launch Score, setup tasks, domain discovery, launch timeline and milestones — everything you need to launch in one place.">
+<link rel="canonical" href="https://igotdomain.com/dashboard">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <div class="nav-links">
+    <a href="/how-it-works">How It Works</a>
+    <a href="/dashboard" class="active">Dashboard</a>
+    <a href="/assistant">AI Assistant</a>
+    <a href="/blog">Blog</a>
+    <a href="/why-us">Why Us</a>
+  </div>
+  <a href="/assistant" class="nav-cta">AI Assistant →</a>
+</nav>
+
+<header class="page-hero">
+  <div class="section-label">Live Platform Preview</div>
+  <h1>Your Business Command Center</h1>
+  <p>Track your launch progress, setup tasks, domains, and timeline — all updating dynamically as you move forward.</p>
+</header>
+
+<main>
+<section style="padding-top:20px">
+  <div class="container">
+    <div class="dashboard-mock reveal" data-onreveal="animateDash" style="max-width:760px;margin:0 auto">
+      <div class="dash-header">
+        <div class="dash-dots"><div class="dash-dot"></div><div class="dash-dot"></div><div class="dash-dot"></div></div>
+        <div class="dash-title">Igotdomain Dashboard · Sarah's SaaS</div>
+      </div>
+      <div class="dash-body">
+        <div class="dash-score-row">
+          <div><div class="dash-score-label">Business Launch Score</div><div class="dash-score-val" id="dScore">0%</div></div>
+          <div style="text-align:right"><div style="font-size:12px;color:var(--gray-500)">Launch Preparation</div><div style="font-size:12px;color:#D97706;margin-top:4px">🔥 On Track</div></div>
+        </div>
+        <div class="dash-progress-track"><div class="dash-progress-fill" id="dBar"></div></div>
+        <div class="dash-tasks" id="dTasks">
+          <div class="dash-task" style="opacity:0"><div class="dash-task-icon task-done">✓</div><div class="dash-task-name">Business Idea Validated</div><div class="dash-task-status status-done">Done</div></div>
+          <div class="dash-task" style="opacity:0"><div class="dash-task-icon task-done">✓</div><div class="dash-task-name">Domain Selected</div><div class="dash-task-status status-done">Done</div></div>
+          <div class="dash-task" style="opacity:0"><div class="dash-task-icon task-progress">⚙</div><div class="dash-task-name">Website Creation</div><div class="dash-task-status status-prog">In Progress</div></div>
+          <div class="dash-task" style="opacity:0"><div class="dash-task-icon task-pending">○</div><div class="dash-task-name">Branding & Identity</div><div class="dash-task-status status-pending">Up Next</div></div>
+          <div class="dash-task" style="opacity:0"><div class="dash-task-icon task-pending">○</div><div class="dash-task-name">Marketing Preparation</div><div class="dash-task-status status-pending">Pending</div></div>
+        </div>
+        <div class="domain-row">
+          <div class="domain-label">Discovered Domains</div>
+          <div class="domain-chips"><div class="domain-chip">sarahsaas.io</div><div class="domain-chip">sarahbuilds.com</div><div class="domain-chip">trysarah.ai</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard-layout" style="margin-top:60px">
+      <div class="reveal">
+        <h2 class="section-title" style="font-size:32px">Everything Updates as You Go</h2>
+        <p class="section-sub">Complete a step in the assistant and watch your score climb, tasks check off, and your launch date come into focus.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:24px">
+          <div class="feature-row"><div class="feature-ico">📊</div><div><strong>Live Launch Score</strong><p>0% → 100% across five clear milestones</p></div></div>
+          <div class="feature-row"><div class="feature-ico">🗓️</div><div><strong>Launch Timeline</strong><p>Estimated completion dates for every task</p></div></div>
+          <div class="feature-row"><div class="feature-ico">🌐</div><div><strong>Domain Discovery</strong><p>Saved suggestions and price comparisons</p></div></div>
+          <div class="feature-row"><div class="feature-ico">✅</div><div><strong>Setup Tasks</strong><p>A living checklist that adapts to your business</p></div></div>
+        </div>
+        <a href="/assistant" class="btn-primary" style="margin-top:28px">Continue in the Assistant →</a>
+      </div>
+      <div class="score-visual reveal" style="margin-top:0">
+        <div class="score-milestones">
+          <div class="milestone"><div class="milestone-pct">0%</div><div class="milestone-bar"><div class="milestone-fill" style="width:0"></div></div><div class="milestone-label" style="min-width:auto">Getting Started</div><div class="milestone-badge badge-done">✓</div></div>
+          <div class="milestone"><div class="milestone-pct">25%</div><div class="milestone-bar"><div class="milestone-fill" style="width:100%"></div></div><div class="milestone-label" style="min-width:auto">Business Planning</div><div class="milestone-badge badge-done">✓</div></div>
+          <div class="milestone"><div class="milestone-pct">50%</div><div class="milestone-bar"><div class="milestone-fill" style="width:100%"></div></div><div class="milestone-label" style="min-width:auto">Website Setup</div><div class="milestone-badge badge-done">✓</div></div>
+          <div class="milestone"><div class="milestone-pct">75%</div><div class="milestone-bar"><div class="milestone-fill" style="width:55%"></div></div><div class="milestone-label" style="min-width:auto">Launch Prep</div><div class="milestone-badge badge-active">🔥</div></div>
+          <div class="milestone"><div class="milestone-pct">100%</div><div class="milestone-bar"><div class="milestone-fill" style="width:0"></div></div><div class="milestone-label" style="min-width:auto">Ready 🚀</div><div class="milestone-badge badge-todo">Soon</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE FOUNDER LAUNCH PACK (gated) -->
+<section id="launchPack" style="background:var(--gray-50);display:none">
+  <div class="container">
+    <div class="reveal text-center">
+      <div class="section-label">🎁 Unlocked</div>
+      <h2 class="section-title">Your Free Founder Launch Pack</h2>
+      <p class="section-sub">Thanks for getting started! These premium resources are yours to keep — free, forever.</p>
+    </div>
+    <div class="trust-cards" style="margin-top:48px">
+      <a class="trust-card reveal" href="pack/startup-checklist.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+        <div class="trust-icon">✅</div><div class="trust-title">Startup Checklist</div>
+        <div class="trust-desc">The complete idea-to-launch checklist across all five phases.</div>
+        <div style="margin-top:14px;color:var(--teal);font-weight:600;font-size:14px">Download PDF ↓</div>
+      </a>
+      <a class="trust-card reveal" href="pack/100-ai-prompts.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+        <div class="trust-icon">🤖</div><div class="trust-title">100 AI Prompts for Startups</div>
+        <div class="trust-desc">Copy-paste prompts for validation, naming, copy, marketing & ops.</div>
+        <div style="margin-top:14px;color:var(--teal);font-weight:600;font-size:14px">Download PDF ↓</div>
+      </a>
+      <a class="trust-card reveal" href="pack/domain-buying-guide.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+        <div class="trust-icon">🌐</div><div class="trust-title">Domain Buying Guide</div>
+        <div class="trust-desc">Choose a great domain and never overpay on renewals again.</div>
+        <div style="margin-top:14px;color:var(--teal);font-weight:600;font-size:14px">Download PDF ↓</div>
+      </a>
+      <a class="trust-card reveal" href="pack/seo-checklist.pdf" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+        <div class="trust-icon">🔍</div><div class="trust-title">SEO Checklist</div>
+        <div class="trust-desc">The fundamentals that help people and AI find your business.</div>
+        <div style="margin-top:14px;color:var(--teal);font-weight:600;font-size:14px">Download PDF ↓</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LOCKED STATE (shown until unlocked) -->
+<section id="packLocked" style="background:var(--gray-50);display:none">
+  <div class="container-narrow text-center">
+    <div class="trust-card reveal" style="text-align:center">
+      <div class="trust-icon">🔒</div>
+      <div class="trust-title">Unlock Your Free Founder Launch Pack</div>
+      <div class="trust-desc" style="margin-bottom:20px">Get our Startup Checklist, 100 AI Prompts, Domain Buying Guide and SEO Checklist — completely free. Just complete two quick steps:</div>
+      <div style="text-align:left;max-width:420px;margin:0 auto 22px">
+        <div class="feature-row" style="margin-bottom:12px"><div class="feature-ico" id="lockStep1">1</div><div><strong>Add your email</strong><p>So we can save your progress</p></div></div>
+        <div class="feature-row"><div class="feature-ico" id="lockStep2">2</div><div><strong>Try one comparison link</strong><p>Open any provider from the AI assistant</p></div></div>
+      </div>
+      <a href="/assistant" class="btn-primary">Continue in the Assistant →</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="nav-logo">Igot<span>domain</span></div><div class="footer-desc">Helping founders launch better businesses through AI-guided, step-by-step processes. Free forever.</div></div>
+    <div class="footer-col"><h4>Product</h4><a href="/how-it-works">How It Works</a><a href="/dashboard">Dashboard</a><a href="/assistant">AI Assistant</a></div>
+    <div class="footer-col"><h4>Resources</h4><a href="/blog">Blog</a><a href="/why-us">FAQ</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="/why-us">About</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 Igotdomain. All rights reserved.</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a></div></div>
+</footer>
+
+<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Launch your business 🚀</span><span class="float-btn">🤖</span></a>
+<div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress and improve your experience. We never sell your data. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-manage" onclick="manageCookies()">Manage</button><button class="cookie-btn cookie-reject" onclick="closeCookie()">Reject Non-Essential</button><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept All</button></div></div>
+<script src="app.js"></script>
+<script>
+  let dashDone=false;
+  function animateDash(){
+    if(dashDone) return; dashDone=true;
+    const bar=document.getElementById('dBar'), scoreEl=document.getElementById('dScore');
+    setTimeout(()=>{ bar.style.width='72%'; },150);
+    let v=0; const iv=setInterval(()=>{ v+=2; if(v>72){v=72;clearInterval(iv);} scoreEl.textContent=v+'%'; },26);
+    document.querySelectorAll('#dTasks .dash-task').forEach((t,i)=>{ setTimeout(()=>{ t.style.transition='opacity .5s ease'; t.style.opacity='1'; },300+i*180); });
+  }
+
+  // ---- Free Founder Launch Pack gating ----
+  (function(){
+    let email='', purchased=false;
+    try{ email=localStorage.getItem('igd_email')||''; purchased=localStorage.getItem('igd_purchased')==='1'; }catch(e){}
+    const unlocked = !!email && purchased;
+    const packEl=document.getElementById('launchPack');
+    const lockEl=document.getElementById('packLocked');
+    if(unlocked){
+      packEl.style.display='block';
+      // ensure reveal animation fires for newly shown cards
+      packEl.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+    } else {
+      lockEl.style.display='block';
+      lockEl.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+      // tick off whichever steps are already complete
+      if(email){ const s=document.getElementById('lockStep1'); s.textContent='✓'; s.style.background='var(--teal)'; s.style.color='#fff'; }
+      if(purchased){ const s=document.getElementById('lockStep2'); s.textContent='✓'; s.style.background='var(--teal)'; s.style.color='#fff'; }
+    }
+  })();
+</script>
+</body>
+</html>

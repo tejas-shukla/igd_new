@@ -1,0 +1,12 @@
+{
+  "name": "igotdomain",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Igotdomain — a guided, AI-assisted platform that helps founders launch a business: domain discovery, price comparison, website builders, business accounts and accounting software.",
+  "scripts": {
+    "dev": "npx serve public",
+    "start": "npx serve public"
+  },
+  "keywords": ["startup", "launch", "domains", "founders", "ai"],
+  "license": "UNLICENSED"
+}
