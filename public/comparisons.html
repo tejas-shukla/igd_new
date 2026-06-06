@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saved Comparisons – Your Research Library | Igotdomain</title>
-<meta name="description" content="All your saved tool comparisons in one place. Resume any comparison or start a new one with the Igotdomain AI assistant.">
+<title>Saved Comparisons – Your Research Library | IGotDomain</title>
+<meta name="description" content="All your saved tool comparisons in one place. Resume any comparison or start a new one with the IGotDomain AI assistant.">
 <link rel="canonical" href="https://igotdomain.com/comparisons">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
 </head>
 <body>
 <nav aria-label="Main navigation">
-  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <a href="/" class="nav-logo"><span class="logo-mark"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5 14.5 8 8 14.5 1.5 8Z" fill="white"/></svg></span>IGot<span>Domain</span></a>
   <div class="nav-links">
     <a href="/how-it-works">How It Works</a>
     <a href="/dashboard">Dashboard</a>
@@ -52,7 +52,7 @@
   <div id="cplContent"></div>
 </main>
 
-<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Start a comparison 🤖</span><span class="float-btn">🤖</span></a>
+<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Start a comparison</span><span class="float-btn"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></a>
 <div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept</button></div></div>
 
 <script src="app.js"></script>
@@ -81,7 +81,7 @@ function render(){
 
   if(!saved.length){
     el.innerHTML='<div class="cpl-empty">'+
-      '<div class="ico">🔍</div>'+
+      '<div class="ico" style="color:var(--teal);width:48px;height:48px;margin:0 auto 16px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>'+
       '<h2>No saved comparisons yet</h2>'+
       '<p>Every comparison you run in the AI assistant is automatically saved here for easy reference.</p>'+
       '<a href="/assistant" class="btn-primary">Start your first comparison →</a>'+

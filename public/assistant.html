@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Launch Assistant – Igotdomain</title>
-<meta name="description" content="Chat with the Igotdomain AI assistant: get domain name suggestions, compare domain prices across providers, and compare website builders, business accounts and accounting software.">
+<title>AI Launch Assistant – IGotDomain</title>
+<meta name="description" content="Chat with the IGotDomain AI assistant: get domain name suggestions, compare domain prices across providers, and compare website builders, business accounts and accounting software.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://igotdomain.com/assistant">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
   .decision-card .dsub  { font-size:12px; color:var(--gray-500); margin-top:2px; }
   .decision-card.full   { grid-column:1/-1; }
   @media(max-width:480px){ .decision-grid{ grid-template-columns:1fr; } }
- 
+
   /* ── Founder Decisions — next step cards after each comparison ── */
   .next-decisions { margin:6px 0 4px; }
   .next-decisions p { font-size:13px; color:var(--gray-600); margin-bottom:8px; }
@@ -41,9 +41,9 @@
 </style>
 </head>
 <body>
- 
+
 <nav aria-label="Main navigation">
-  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <a href="/" class="nav-logo"><span class="logo-mark"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5 14.5 8 8 14.5 1.5 8Z" fill="white"/></svg></span>IGot<span>Domain</span></a>
   <div class="nav-links">
     <a href="/how-it-works">How It Works</a>
     <a href="/dashboard">Dashboard</a>
@@ -53,13 +53,13 @@
   </div>
   <a href="/dashboard" class="nav-cta">My Dashboard →</a>
 </nav>
- 
+
 <main class="assistant-wrap">
   <div class="assistant-shell">
     <div class="assistant-head">
-      <div class="chat-avatar">🚀</div>
+      <div class="chat-avatar"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <div>
-        <div class="chat-name">Igotdomain Assistant</div>
+        <div class="chat-name">IGotDomain Assistant</div>
         <div class="chat-status">● Online · Your founder companion</div>
       </div>
     </div>
@@ -74,41 +74,41 @@
     <a href="/why-us" style="color:var(--teal)">Our promise →</a>
   </p>
 </main>
- 
+
 <a href="/dashboard" class="float-chat" aria-label="Go to dashboard">
-  <span class="float-tooltip">View dashboard 📊</span>
-  <span class="float-btn">📊</span>
+  <span class="float-tooltip">View dashboard</span>
+  <span class="float-btn"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="15"/><line x1="12" y1="7" x2="12" y2="15"/><line x1="15" y1="11" x2="15" y2="15"/></svg></span>
 </a>
- 
+
 <script src="app.js"></script>
 <script>
 /* ============================================================
-   Igotdomain Assistant — v3
+   IGotDomain Assistant — v3
    No AI API required. Keyword-matched, state-driven flow.
    State writes to localStorage.igd_state so /dashboard updates.
    ============================================================ */
- 
+
 const body    = document.getElementById('abody');
 const inputEl = document.getElementById('ainput');
 const sendBtn = document.getElementById('asend');
- 
+
 const STORE_KEY  = 'igd_progress';
 const EMAIL_KEY  = 'igd_email';
 const STATE_KEY  = 'igd_state';   // dashboard reads this
- 
+
 const STOP = new Set(['a','an','the','for','to','of','and','or','my','i','want','build',
   'create','make','business','startup','company','idea','app','platform','that','helps',
   'help','with','in','on','is','are','be','it','this','website','site','need','looking']);
- 
+
 let state = { email:'', idea:'', domain:'', step:'idea', name:'' };
- 
+
 /* ── localStorage helpers ── */
 function loadStore(){ try{ return JSON.parse(localStorage.getItem(STORE_KEY)||'{}'); }catch(e){ return {}; } }
 function loadIgdState(){
   try{ var s=JSON.parse(localStorage.getItem(STATE_KEY)); return s||null; }catch(e){ return null; }
 }
 function saveIgdState(s){ try{ localStorage.setItem(STATE_KEY,JSON.stringify(s)); }catch(e){} }
- 
+
 function defaultIgdState(name){
   return {
     name: name||'there',
@@ -116,26 +116,26 @@ function defaultIgdState(name){
     saved:[], activity:[], websitePartial:false
   };
 }
- 
+
 function getOrCreateIgdState(){
   var s=loadIgdState();
   if(!s) s=defaultIgdState(state.email?state.email.split('@')[0]:'there');
   return s;
 }
- 
+
 function addToStack(category, toolName, saved){
   var s=getOrCreateIgdState();
   s.stack[category]={ tool:toolName, done:true, saved:saved||0 };
   saveIgdState(s);
 }
- 
+
 function markIdea(ideaText){
   var s=getOrCreateIgdState();
   s.stack.idea={ tool:'Validated', done:true };
   if(ideaText) s.name = ideaText.split(' ').slice(0,3).join(' ');
   saveIgdState(s);
 }
- 
+
 function logActivity(type, txt){
   var s=getOrCreateIgdState();
   if(!s.activity) s.activity=[];
@@ -143,14 +143,14 @@ function logActivity(type, txt){
   if(s.activity.length>8) s.activity=s.activity.slice(0,8);
   saveIgdState(s);
 }
- 
+
 function saveComparison(title){
   var s=getOrCreateIgdState();
   if(!s.saved) s.saved=[];
   if(!s.saved.includes(title)){ s.saved.unshift(title); if(s.saved.length>6) s.saved=s.saved.slice(0,6); }
   saveIgdState(s);
 }
- 
+
 function saveProgress(){
   if(!state.email) return;
   try{
@@ -163,13 +163,13 @@ function saveProgress(){
     saveIgdState(s);
   }catch(e){}
 }
- 
+
 function setStep(st){ state.step=st; saveProgress(); }
 function markPurchased(){ try{ localStorage.setItem('igd_purchased','1'); }catch(e){} }
- 
+
 /* ── DOM helpers ── */
 function scrollDown(){ body.scrollTop=body.scrollHeight; }
- 
+
 function ai(html, delay){
   delay = delay===undefined ? 600 : delay;
   return new Promise(function(res){
@@ -184,18 +184,18 @@ function ai(html, delay){
     }, delay);
   });
 }
- 
+
 function user(text){
   var w=document.createElement('div'); w.className='msg msg-user';
   w.innerHTML='<div class="msg-bubble">'+text+'</div>';
   body.appendChild(w); scrollDown();
 }
- 
+
 function card(innerHTML){
   var c=document.createElement('div'); c.className='acard';
   c.innerHTML=innerHTML; body.appendChild(c); scrollDown(); return c;
 }
- 
+
 function chips(options, handler){
   var wrap=document.createElement('div'); wrap.className='quick-chips';
   options.forEach(function(o){
@@ -204,16 +204,16 @@ function chips(options, handler){
   });
   body.appendChild(wrap); scrollDown(); return wrap;
 }
- 
+
 function isEmail(t){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(t.trim()); }
 function isDomain(t){ return /\.[a-z]{2,}$/i.test(t.trim())&&!/\s/.test(t.trim()); }
- 
+
 function keywords(text){
   return text.toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/)
     .filter(function(w){ return w&&w.length>2&&!STOP.has(w); });
 }
 function capital(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
- 
+
 /* ── Keyword intent detection for free typing ── */
 function detectIntent(text){
   var t=text.toLowerCase();
@@ -225,7 +225,7 @@ function detectIntent(text){
   if(/(email|google\s*workspace|outlook|microsoft\s*365|branded\s*email)/.test(t)) return 'email';
   return null;
 }
- 
+
 /* ── Domain suggestions ── */
 function suggestDomains(text){
   var kw=keywords(text); var base=kw[0]||'launch'; var second=kw[1]||'';
@@ -239,7 +239,7 @@ function suggestDomains(text){
     {name:base+(second||'app'), ext:'.ai'}
   ].map(function(c,i){ return Object.assign({},c,{name:c.name.toLowerCase(),avail:!(i===0)}); });
 }
- 
+
 /* ── Provider affiliate links ── */
 var LINKS = {
   'Cloudflare':'https://www.cloudflare.com/products/registrar/','Porkbun':'https://porkbun.com/',
@@ -259,7 +259,7 @@ function provLink(name, label){
   return '<a href="'+url+'" target="_blank" rel="noopener" onclick="markPurchased()" '+
     'style="color:var(--teal);font-weight:600;text-decoration:none">'+(label||'Visit ↗')+'</a>';
 }
- 
+
 /* ── Comparison tables (all original data kept) ── */
 function domainPriceTable(domain){
   var ext='.'+domain.split('.').pop();
@@ -278,7 +278,7 @@ function domainPriceTable(domain){
             ['GoDaddy','🟢','$99.99','$104.99','Paid','Premium markup',false]]
   };
   var rows=map[ext]||map['.com'];
-  var html='<div class="acard-title">🌐 Domain prices — <span style="color:var(--teal)">'+domain+'</span></div>';
+  var html='<div class="acard-title">Domain prices — <span style="color:var(--teal)">'+domain+'</span></div>';
   html+='<div class="acard-note">Sample first-year & renewal pricing. Links open in a new tab.</div>';
   html+='<div class="cmp-wrap"><table class="cmp"><thead><tr><th>Provider</th><th>1st year</th><th>Renewal</th><th>Privacy</th><th></th></tr></thead><tbody>';
   rows.forEach(function(r){
@@ -289,7 +289,7 @@ function domainPriceTable(domain){
   });
   html+='</tbody></table></div>'; return html;
 }
- 
+
 var builders=[['Shopify','🛍️','$29/mo','2.9%+30¢','E-commerce & DTC',true],
               ['Framer','🎨','$15/mo','0%','Design-led SaaS sites',false],
               ['Wix','🔷','$17/mo','0%','All-purpose small sites',false],
@@ -297,48 +297,48 @@ var builders=[['Shopify','🛍️','$29/mo','2.9%+30¢','E-commerce & DTC',true]
               ['Webflow','🌀','$14/mo','0%','Custom, design-led sites',false],
               ['WordPress.com','📝','$4/mo','0%','Blogs & full flexibility',false]];
 function buildersTable(){
-  var html='<div class="acard-title">🛠️ Website builder comparison</div><div class="acard-note">Sample pricing — links open in a new tab</div>';
+  var html='<div class="acard-title">Website builder comparison</div><div class="acard-note">Sample pricing — links open in a new tab</div>';
   html+='<div class="cmp-wrap"><table class="cmp"><thead><tr><th>Builder</th><th>From</th><th>Fees</th><th>Best for</th><th></th></tr></thead><tbody>';
   builders.forEach(function(b){
     html+='<tr class="'+(b[5]?'best':'')+'"><td><span class="prov"><span class="pico">'+b[1]+'</span>'+b[0]+(b[5]?' <span class="pill pill-best">Popular</span>':'')+'</span></td><td class="price">'+b[2]+'</td><td>'+b[3]+'</td><td>'+b[4]+'</td><td>'+provLink(b[0],'Visit ↗')+'</td></tr>';
   });
   html+='</tbody></table></div>'; return html;
 }
- 
+
 var accounts=[['Mercury','🏦','$0/mo','Free','Tech startups (US)',true],
               ['Wise Business','💸','$0','Low FX','Multi-currency',false],
               ['Revolut Business','⚡','$0–$25/mo','Multi-FX','Global teams',false],
               ['Tide','🌊','£0/mo','Pay-as-you-go','UK sole traders',false],
               ['Starling','⭐','£0/mo','Free UK transfers','UK SMEs',false]];
 function accountsTable(){
-  var html='<div class="acard-title">🏦 Business account comparison</div><div class="acard-note">Sample data — availability varies by country. Links open in a new tab.</div>';
+  var html='<div class="acard-title">Business account comparison</div><div class="acard-note">Sample data — availability varies by country. Links open in a new tab.</div>';
   html+='<div class="cmp-wrap"><table class="cmp"><thead><tr><th>Provider</th><th>Fee</th><th>Transfers/FX</th><th>Best for</th><th></th></tr></thead><tbody>';
   accounts.forEach(function(a){
     html+='<tr class="'+(a[5]?'best':'')+'"><td><span class="prov"><span class="pico">'+a[1]+'</span>'+a[0]+(a[5]?' <span class="pill pill-best">Top pick</span>':'')+'</span></td><td class="price">'+a[2]+'</td><td>'+a[3]+'</td><td>'+a[4]+'</td><td>'+provLink(a[0],'Open ↗')+'</td></tr>';
   });
   html+='</tbody></table></div>'; return html;
 }
- 
+
 var softwareList=[['Wave','🌊','Free','Invoicing & accounting','Solo founders',true],
                   ['QuickBooks','📗','$19/mo','Full accounting + payroll','Small business standard',false],
                   ['Xero','🔵','$20/mo','Unlimited users','Growing teams',false],
                   ['FreeAgent','🟣','$13/mo','UK tax & self-assessment','UK freelancers',false],
                   ['FreshBooks','🟢','$17/mo','Best-in-class invoicing','Service businesses',false]];
 function accountingTable(){
-  var html='<div class="acard-title">📒 Accounting software comparison</div><div class="acard-note">Sample pricing — links open in a new tab</div>';
+  var html='<div class="acard-title">Accounting software comparison</div><div class="acard-note">Sample pricing — links open in a new tab</div>';
   html+='<div class="cmp-wrap"><table class="cmp"><thead><tr><th>Software</th><th>From</th><th>Strength</th><th>Best for</th><th></th></tr></thead><tbody>';
   softwareList.forEach(function(a){
     html+='<tr class="'+(a[5]?'best':'')+'"><td><span class="prov"><span class="pico">'+a[1]+'</span>'+a[0]+(a[5]?' <span class="pill pill-best">Free pick</span>':'')+'</span></td><td class="price">'+a[2]+'</td><td>'+a[3]+'</td><td>'+a[4]+'</td><td>'+provLink(a[0],'Visit ↗')+'</td></tr>';
   });
   html+='</tbody></table></div>'; return html;
 }
- 
+
 /* ── "What are you looking for?" quick-pick grid ── */
 function showDecisionGrid(){
   var c=document.createElement('div'); c.className='acard';
   c.innerHTML='<div class="acard-title" style="margin-bottom:12px">What would you like to sort first?</div>';
   var grid=document.createElement('div'); grid.className='decision-grid';
- 
+
   var decisions=[
     { ico:'🔤', title:'Find a domain name',      sub:'Check availability & prices',   fn: function(){ removeGrid(); user('Help me find a domain'); askDomainIdea(); }},
     { ico:'🌐', title:'I have a domain',          sub:'Compare registrar prices',       fn: function(){ removeGrid(); user('I already have a domain'); promptExistingDomain(); }},
@@ -347,9 +347,9 @@ function showDecisionGrid(){
     { ico:'📒', title:'Set up accounting',        sub:'Software for your books',        fn: function(){ removeGrid(); user('Accounting software comparison'); doAccounting(); }},
     { ico:'🗺️',  title:'See the full roadmap',    sub:'Walk through every step',        fn: function(){ removeGrid(); user('Show me the full founder roadmap'); runFullFlow(); }, full:true}
   ];
- 
+
   function removeGrid(){ c.remove(); }
- 
+
   decisions.forEach(function(d){
     var btn=document.createElement('button');
     btn.className='decision-card'+(d.full?' full':'');
@@ -357,10 +357,10 @@ function showDecisionGrid(){
     btn.onclick=d.fn;
     grid.appendChild(btn);
   });
- 
+
   c.appendChild(grid); body.appendChild(c); scrollDown(); return c;
 }
- 
+
 /* ── Related Founder Decisions (shown after each comparison) ── */
 function showNextDecisions(exclude){
   var all=[
@@ -369,7 +369,7 @@ function showNextDecisions(exclude){
     { ico:'🏦', label:'Business banking',fn: function(){ user('Business bank account'); doAccounts(); }},
     { ico:'📒', label:'Accounting',      fn: function(){ user('Accounting software'); doAccounting(); }},
   ].filter(function(d){ return d.label.toLowerCase().indexOf(exclude||'__')===-1; });
- 
+
   var wrap=document.createElement('div'); wrap.className='msg msg-ai';
   var html='<div class="msg-bubble"><div class="next-decisions"><p>Related founder decisions:</p><div class="nd-grid">';
   var fns=[];
@@ -384,7 +384,7 @@ function showNextDecisions(exclude){
   });
   body.appendChild(wrap); scrollDown();
 }
- 
+
 /* ── Step nav (skip button) — same pattern as before ── */
 function stepNav(prompt, label, fn){
   var c=card('<div style="font-size:14px;color:var(--gray-600)">'+prompt+'</div>');
@@ -395,16 +395,16 @@ function stepNav(prompt, label, fn){
   skip.onclick=function(){ act.remove(); user('Skip this'); fn(true); };
   act.appendChild(b); act.appendChild(skip); c.appendChild(act); scrollDown();
 }
- 
+
 /* ============================================================
    FLOW STEPS
    ============================================================ */
- 
+
 /* ── Step 1 : Congratulate + ask idea ── */
 async function start(){
   var savedEmail=''; try{ savedEmail=localStorage.getItem(EMAIL_KEY)||''; }catch(e){}
   var store=loadStore();
- 
+
   /* Returning user */
   if(savedEmail && store[savedEmail]){
     state.email=savedEmail; state.idea=store[savedEmail].idea||''; state.domain=store[savedEmail].domain||'';
@@ -418,16 +418,16 @@ async function start(){
     body.appendChild(wrap); scrollDown();
     return;
   }
- 
+
   congratulate();
 }
- 
+
 async function congratulate(){
   await ai('🎉 Congratulations on taking your first step to becoming a founder!', 800);
   await ai('Deciding to build something of your own takes real courage — and you\'ve already done the hardest part by starting. Let\'s make everything from here as easy as possible.', 900);
   askIdea();
 }
- 
+
 async function askIdea(){
   setStep('idea');
   await ai('So — <strong>what\'s your business idea?</strong><br>Even a rough sentence or just a few words is fine. I only need enough to point you in the right direction.');
@@ -436,33 +436,33 @@ async function askIdea(){
     function(val,wrap){ wrap.remove(); handleInput(val); }
   );
 }
- 
+
 /* ── Step 2 : After idea → ask what they need ── */
 async function afterIdeaStep(){
   markIdea(state.idea);
   logActivity('compared', 'Shared idea: '+state.idea.slice(0,40));
- 
+
   var short = state.idea.length > 40 ? state.idea.slice(0,40)+'…' : state.idea;
   await ai('Love it — <strong>'+short+'</strong> sounds like a great direction. 💡');
   await ai('Do you have a <strong>business name or domain</strong> in mind? Or jump straight to what you need most:');
   showDecisionGrid();
 }
- 
+
 /* ── Domain flows ── */
 async function askDomainIdea(){
   setStep('domains');
   await ai('What name are you thinking of — or describe your business and I\'ll suggest some options.');
 }
- 
+
 async function promptExistingDomain(){
   setStep('domains');
   await ai('No problem — type the domain and I\'ll compare prices across registrars for you.');
 }
- 
+
 async function showDomainSuggestions(text){
   setStep('domains');
   var sugg=suggestDomains(text);
-  var c=card('<div class="acard-title">🌐 Domain suggestions</div><div class="acard-note">Pick one to compare prices across registrars</div>');
+  var c=card('<div class="acard-title">Domain suggestions</div><div class="acard-note">Pick one to compare prices across registrars</div>');
   var list=document.createElement('div'); list.className='domain-suggest';
   sugg.forEach(function(s){
     var row=document.createElement('div'); row.className='dsug';
@@ -478,7 +478,7 @@ async function showDomainSuggestions(text){
   skip.onclick=function(){ user('I already have a domain'); doBuilders(); };
   act.appendChild(skip); c.appendChild(act); scrollDown();
 }
- 
+
 async function pickDomain(domain, cardEl){
   state.domain=domain;
   cardEl.querySelectorAll('.dsug').forEach(function(d){ d.style.pointerEvents='none'; });
@@ -493,7 +493,7 @@ async function pickDomain(domain, cardEl){
   stepNav('Next up — where will you build your website?','Compare website builders →',doBuilders);
   showNextDecisions('domain');
 }
- 
+
 async function runDomainPrices(){
   logActivity('compared','Compared domain prices for '+state.domain);
   saveComparison('Domain prices: '+state.domain);
@@ -504,7 +504,7 @@ async function runDomainPrices(){
   stepNav('Next, let\'s pick where you\'ll build your site.','Compare website builders →',doBuilders);
   showNextDecisions('domain');
 }
- 
+
 /* ── Website builders ── */
 async function doBuilders(skip){
   setStep('builders');
@@ -519,7 +519,7 @@ async function doBuilders(skip){
   stepNav('Now the money side — where will you hold your business funds?','Compare business accounts →',doAccounts);
   showNextDecisions('website');
 }
- 
+
 /* ── Business accounts ── */
 async function doAccounts(skip){
   setStep('accounts');
@@ -534,7 +534,7 @@ async function doAccounts(skip){
   stepNav('Last piece — keeping your books in order.','Compare accounting software →',doAccounting);
   showNextDecisions('bank');
 }
- 
+
 /* ── Accounting ── */
 async function doAccounting(skip){
   setStep('accounting');
@@ -547,7 +547,7 @@ async function doAccounting(skip){
   }
   finish();
 }
- 
+
 /* ── Full roadmap (walk through everything) ── */
 async function runFullFlow(){
   setStep('domains');
@@ -556,17 +556,17 @@ async function runFullFlow(){
   if(state.idea){ await showDomainSuggestions(state.idea); }
   else { await ai('First, what\'s your business idea or name?'); }
 }
- 
+
 /* ── Finish ── */
 async function finish(){
   setStep('done');
   await ai('🎉 That\'s your core launch stack: <strong>domain → website → bank → books</strong>. Your dashboard is tracking everything.');
-  var c=card('<div class="acard-title">🚀 You\'re ready to launch</div><div class="acard-note">Your startup progress has been saved to your dashboard</div>');
+  var c=card('<div class="acard-title">You\'re ready to launch</div><div class="acard-note">Your startup progress has been saved to your dashboard</div>');
   var act=document.createElement('div'); act.className='acard-actions';
   act.innerHTML='<a class="next-btn" href="/dashboard">Open my dashboard →</a><a class="next-btn ghost" href="/how-it-works">See full roadmap</a>';
   c.appendChild(act); scrollDown();
 }
- 
+
 /* ── Resume returning user ── */
 async function resume(){
   var s=state.step;
@@ -578,12 +578,12 @@ async function resume(){
   if(state.idea){ return afterIdeaStep(); }
   askIdea();
 }
- 
+
 /* ── Free-text input handler ── */
 async function handleInput(text){
   text=text.trim(); if(!text) return;
   document.querySelectorAll('.quick-chips').forEach(function(c){ c.remove(); });
- 
+
   /* Email capture step */
   if(state.step==='email'){
     if(!isEmail(text)){ user(text); await ai('Hmm, that doesn\'t look like an email. Pop in a valid address so I can save your progress 🙂'); return; }
@@ -599,9 +599,9 @@ async function handleInput(text){
     await ai('Saved! 🔒 You can leave and come back anytime — I\'ll remember where you left off.');
     return afterIdeaStep();
   }
- 
+
   user(text);
- 
+
   /* Domain typed directly */
   if(isDomain(text)){
     state.domain=text.toLowerCase();
@@ -614,7 +614,7 @@ async function handleInput(text){
     showNextDecisions('domain');
     return;
   }
- 
+
   /* Free-type intent detection (after onboarding) */
   if(state.step !== 'idea'){
     var intent=detectIntent(text);
@@ -623,31 +623,31 @@ async function handleInput(text){
     if(intent==='banking'){ await ai('Here\'s how the top business accounts compare 👇'); return doAccounts(); }
     if(intent==='accounting'){ await ai('Here\'s the accounting software comparison 👇'); return doAccounting(); }
   }
- 
+
   /* Idea capture (first message) */
   if(state.step==='idea'){
     state.idea=text;
     /* Skip email for now — show value first, then ask email at the end */
     return afterIdeaStep();
   }
- 
+
   /* Domain suggestion step — treat input as a name/idea to suggest from */
   if(state.step==='domains'){
     await ai('Let me find some domain options based on <strong>'+text+'</strong> 👇');
     await showDomainSuggestions(text);
     return;
   }
- 
+
   /* Fallback */
   await ai('Got it! Here\'s what I can help you with right now:');
   showDecisionGrid();
 }
- 
+
 /* ── Wiring ── */
 function submit(){ var v=inputEl.value; if(!v.trim()) return; inputEl.value=''; handleInput(v); }
 sendBtn.addEventListener('click', submit);
 inputEl.addEventListener('keydown', function(e){ if(e.key==='Enter') submit(); });
- 
+
 start();
 </script>
 </body>
