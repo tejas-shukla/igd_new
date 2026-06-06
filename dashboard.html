@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder Dashboard – Your Startup Command Center | Igotdomain</title>
+<meta name="description" content="Your Igotdomain Founder OS dashboard: setup progress, your startup stack, recommended next action, savings tracker, saved comparisons and recent activity — all in one place.">
+<link rel="canonical" href="https://igotdomain.com/dashboard">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* ===== Founder OS dashboard — scoped, built on the shared design system ===== */
+  .fos-wrap { max-width: 1140px; margin: 0 auto; padding: 104px 24px 72px; }
+  .fos-head { display:flex; flex-wrap:wrap; gap:16px; align-items:flex-end; justify-content:space-between; margin-bottom:28px; }
+  .fos-head h1 { font-family:var(--font-display); font-size:clamp(26px,3.4vw,34px); font-weight:800; letter-spacing:-1px; color:var(--gray-900); }
+  .fos-head p { color:var(--gray-500); margin-top:6px; font-size:15px; }
+  .fos-head .pct { color:var(--teal); font-weight:700; }
+  .fos-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  .fos-card { background:#fff; border:1px solid rgba(13,148,136,0.14); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; }
+  .fos-card-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .fos-card-title { font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--gray-400); }
+  .fos-mono { font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; letter-spacing:-0.01em; }
+
+  /* progress rows */
+  .fos-prow { display:flex; align-items:center; gap:14px; margin-bottom:12px; }
+  .fos-prow:last-child{margin-bottom:0;}
+  .fos-prow .lbl { width:86px; flex-shrink:0; font-size:13px; color:var(--gray-600); }
+  .fos-track { flex:1; height:7px; background:var(--gray-100); border-radius:50px; overflow:hidden; }
+  .fos-fill { height:100%; border-radius:50px; width:0; transition:width 1.1s cubic-bezier(.16,1,.3,1); }
+  .fos-fill.done{ background:linear-gradient(90deg,var(--teal-light),var(--teal)); }
+  .fos-fill.part{ background:linear-gradient(90deg,#FCD34D,#F59E0B); }
+  .fos-prow .val { width:42px; text-align:right; font-size:12px; color:var(--gray-400); }
+  .fos-pill-next { font-size:11px; font-weight:600; color:var(--teal-dark); background:var(--teal-subtle); padding:2px 9px; border-radius:50px; }
+
+  /* next action */
+  .fos-next { background:linear-gradient(135deg,var(--teal-subtle) 0%, #fff 70%); border-color:rgba(13,148,136,0.25); }
+  .fos-next .eyebrow { display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; color:var(--teal-dark); margin-bottom:12px; }
+  .fos-next h2 { font-family:var(--font-display); font-size:21px; font-weight:800; letter-spacing:-0.5px; color:var(--gray-900); line-height:1.25; }
+  .fos-next p { color:var(--gray-600); font-size:14px; margin:10px 0 18px; line-height:1.55; }
+
+  /* stack + lists */
+  .fos-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--gray-100); font-size:14px; }
+  .fos-row:last-child{ border-bottom:0; }
+  .fos-row .k { color:var(--gray-500); }
+  .fos-row .v { font-weight:600; color:var(--gray-900); display:flex; align-items:center; gap:7px; }
+  .fos-check { color:var(--teal); font-weight:700; }
+  .fos-row a.pick { color:var(--teal); font-weight:600; text-decoration:none; }
+  .fos-row a.pick.muted { color:var(--gray-400); font-weight:500; }
+
+  /* savings */
+  .fos-save-total { margin-top:14px; padding-top:14px; border-top:1px solid var(--gray-100); display:flex; align-items:baseline; justify-content:space-between; }
+  .fos-save-total .big { font-family:var(--font-display); font-size:30px; font-weight:800; color:var(--teal); letter-spacing:-1px; }
+  .fos-note { font-size:11px; color:var(--gray-400); margin-top:4px; }
+
+  /* activity */
+  .fos-act { display:flex; gap:11px; align-items:flex-start; padding:9px 0; }
+  .fos-act .ico { width:22px; height:22px; border-radius:6px; background:var(--gray-100); display:flex; align-items:center; justify-content:center; font-size:11px; flex-shrink:0; }
+  .fos-act .txt { font-size:13.5px; color:var(--gray-800); }
+  .fos-act .when { font-size:11px; color:var(--gray-400); margin-top:1px; }
+
+  .fos-link { color:var(--teal); font-weight:600; font-size:13.5px; text-decoration:none; display:inline-flex; gap:5px; margin-top:12px; }
+
+  @media (max-width: 820px){ .fos-grid{ grid-template-columns:1fr; } .fos-wrap{ padding-top:88px; } }
+</style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <div class="nav-links">
+    <a href="/how-it-works">How It Works</a>
+    <a href="/dashboard" class="active">Dashboard</a>
+    <a href="/assistant">AI Assistant</a>
+    <a href="/blog">Blog</a>
+    <a href="/why-us">Why Us</a>
+  </div>
+  <a href="/assistant" class="nav-cta">AI Assistant →</a>
+</nav>
+
+<main class="fos-wrap">
+  <div class="fos-head">
+    <div>
+      <h1 id="fosGreeting">Welcome back.</h1>
+      <p id="fosSubline">You're <span class="pct" id="fosPct">0%</span> set up. Your next move is one decision away.</p>
+    </div>
+    <a href="/assistant" class="btn-secondary btn-sm">✦ Ask Founder AI</a>
+  </div>
+
+  <div class="fos-grid">
+    <!-- 1 · Startup Progress -->
+    <div class="fos-card">
+      <div class="fos-card-head"><span class="fos-card-title">Startup Progress</span><span class="fos-mono" id="fosProgPct" style="font-weight:600">0%</span></div>
+      <div id="fosProgress"></div>
+    </div>
+
+    <!-- 2 · Recommended Next Action (exactly one) -->
+    <div class="fos-card fos-next" id="fosNextCard">
+      <span class="eyebrow">🧭 Recommended next action</span>
+      <h2 id="fosNextTitle">—</h2>
+      <p id="fosNextWhy">—</p>
+      <a href="/assistant" class="btn-primary btn-sm" id="fosNextCta">Compare →</a>
+    </div>
+
+    <!-- 3 · Your Startup Stack -->
+    <div class="fos-card">
+      <div class="fos-card-head"><span class="fos-card-title">Your Startup Stack</span></div>
+      <div id="fosStack"></div>
+    </div>
+
+    <!-- 4 · Savings Tracker -->
+    <div class="fos-card">
+      <div class="fos-card-head"><span class="fos-card-title">Savings Tracker</span><span style="color:var(--teal)">↗</span></div>
+      <div id="fosSavings"></div>
+      <div class="fos-save-total">
+        <div><div style="font-size:13px;font-weight:600;color:var(--gray-900)">Total saved</div><div class="fos-note">per year, vs going direct</div></div>
+        <div class="big fos-mono" id="fosSaveTotal">£0</div>
+      </div>
+    </div>
+
+    <!-- 5 · Saved Comparisons -->
+    <div class="fos-card">
+      <div class="fos-card-head"><span class="fos-card-title">Saved Comparisons</span></div>
+      <div id="fosSaved"></div>
+      <a href="/assistant" class="fos-link">+ New comparison</a>
+    </div>
+
+    <!-- 6 · Recent Activity -->
+    <div class="fos-card">
+      <div class="fos-card-head"><span class="fos-card-title">Recent Activity</span></div>
+      <div id="fosActivity"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="nav-logo">Igot<span>domain</span></div><div class="footer-desc">Helping founders launch better businesses through AI-guided, step-by-step processes. Free forever.</div></div>
+    <div class="footer-col"><h4>Product</h4><a href="/how-it-works">How It Works</a><a href="/dashboard">Dashboard</a><a href="/assistant">AI Assistant</a></div>
+    <div class="footer-col"><h4>Resources</h4><a href="/blog">Blog</a><a href="/why-us">FAQ</a></div>
+    <div class="footer-col"><h4>Company</h4><a href="/why-us">About</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
+  </div>
+  <div class="footer-bottom"><div class="footer-copy">© 2026 Igotdomain. All rights reserved.</div><div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div><div class="footer-social"><a href="#">𝕏</a><a href="#">in</a></div></div>
+</footer>
+
+<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Launch your business 🚀</span><span class="float-btn">🤖</span></a>
+<div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress and improve your experience. We never sell your data. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-manage" onclick="manageCookies()">Manage</button><button class="cookie-btn cookie-reject" onclick="closeCookie()">Reject Non-Essential</button><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept All</button></div></div>
+
+<script src="app.js"></script>
+<script>
+/* ===== Founder OS — state-driven dashboard =====
+   State lives in localStorage under 'igd_state'. The assistant writes to it as
+   the founder makes decisions; this page renders + derives from it. Falls back
+   to a sensible demo so the page is never empty. */
+(function(){
+  var CATS = [
+    {id:'idea',       label:'Idea',       roadmap:true},
+    {id:'domain',     label:'Domain',     roadmap:true},
+    {id:'website',    label:'Website',    roadmap:true},
+    {id:'email',      label:'Email',      roadmap:true},
+    {id:'banking',    label:'Banking',    roadmap:true},
+    {id:'accounting', label:'Accounting', roadmap:true},
+    {id:'payments',   label:'Payments',   roadmap:true}
+  ];
+  var NEXT_COPY = {
+    domain:     {title:'Secure your domain',            why:'Lock in your name before someone else does — flat-renewal registrars save you the most.'},
+    website:    {title:'Build your website',            why:'With a domain in hand, get a site live — no-code builders launch in a weekend.'},
+    email:      {title:'Set up business email',         why:'Branded email at your domain builds trust before you start outreach.'},
+    banking:    {title:'Open a business bank account',  why:'You have a domain, site and email — open an account before you take revenue.'},
+    accounting: {title:'Connect accounting software',   why:'Keep the books clean from day one, once money starts moving.'},
+    payments:   {title:'Choose a payments provider',    why:'Start taking payments — pick the processor that fits your model.'}
+  };
+
+  var DEMO = {
+    name: 'there',
+    stack: {
+      idea:       {tool:'Validated', done:true},
+      domain:     {tool:'Porkbun',          done:true, saved:55},
+      website:    {tool:'Framer',           done:true, saved:48},
+      email:      {tool:'Google Workspace', done:true, saved:24},
+      banking:    null, accounting:null, payments:null
+    },
+    websitePartial: false,
+    saved: ['Wix vs Webflow','Stripe vs Paddle','Tide vs Revolut'],
+    activity: [
+      {type:'compared',  txt:'Compared Namecheap vs Porkbun', when:'2d ago'},
+      {type:'committed', txt:'Committed Framer to Website',    when:'3d ago'},
+      {type:'viewed',    txt:'Viewed Tide',                   when:'3d ago'},
+      {type:'asked',     txt:'Asked: best email for SaaS',    when:'4d ago'}
+    ]
+  };
+
+  function load(){
+    try { var s = JSON.parse(localStorage.getItem('igd_state')); if(s && s.stack) return s; } catch(e){}
+    return DEMO;
+  }
+  var S = load();
+  try { var em = localStorage.getItem('igd_email'); if(em && S===DEMO){ S.name = em.split('@')[0]; } } catch(e){}
+
+  // ---- derive ----
+  var roadmapCats = CATS.filter(function(c){return c.roadmap;});
+  var doneCount = 0;
+  roadmapCats.forEach(function(c){ var it=S.stack[c.id]; if(it && it.done) doneCount++; });
+  var overall = Math.round((doneCount / roadmapCats.length) * 100);
+
+  // next decision = first roadmap category (after idea) not yet done
+  var nextId = null;
+  ['domain','website','email','banking','accounting','payments'].some(function(id){
+    var it = S.stack[id]; if(!it || !it.done){ nextId = id; return true; } return false;
+  });
+
+  // savings
+  var saveLines = [], total = 0;
+  [['Domain','domain'],['Website','website'],['Software','email']].forEach(function(p){
+    var it = S.stack[p[1]]; var amt = it && it.saved ? it.saved : 0;
+    if(amt){ saveLines.push({label:p[0], amt:amt}); total += amt; }
+  });
+
+  // ---- render ----
+  var fmt = function(n){ return '£' + n.toLocaleString(); };
+  document.getElementById('fosGreeting').textContent = 'Welcome back, ' + S.name + '.';
+  document.getElementById('fosPct').textContent = overall + '%';
+  document.getElementById('fosProgPct').textContent = overall + '%';
+
+  // progress bars
+  var prog = document.getElementById('fosProgress'), html='';
+  roadmapCats.forEach(function(c){
+    var it = S.stack[c.id];
+    var pct = (it && it.done) ? 100 : (c.id==='website' && S.websitePartial ? 75 : 0);
+    var cls = pct===100 ? 'done' : (pct>0 ? 'part':'');
+    var isNext = c.id === nextId;
+    html += '<div class="fos-prow"><span class="lbl">'+c.label+'</span>'+
+            '<div class="fos-track"><div class="fos-fill '+cls+'" data-w="'+pct+'"></div></div>'+
+            (isNext && pct===0 ? '<span class="fos-pill-next">next</span>' : '<span class="val fos-mono">'+pct+'%</span>')+
+            '</div>';
+  });
+  prog.innerHTML = html;
+  setTimeout(function(){ prog.querySelectorAll('.fos-fill').forEach(function(f){ f.style.width = f.getAttribute('data-w')+'%'; }); }, 120);
+
+  // next action
+  if(nextId){
+    var c = NEXT_COPY[nextId];
+    document.getElementById('fosNextTitle').textContent = c.title;
+    document.getElementById('fosNextWhy').textContent = c.why;
+    document.getElementById('fosNextCta').textContent = 'Compare ' + nextId + ' →';
+    document.getElementById('fosNextCta').setAttribute('href','/assistant?decision='+nextId);
+  } else {
+    document.getElementById('fosNextTitle').textContent = "You're all set up 🎉";
+    document.getElementById('fosNextWhy').textContent = 'Your core stack is complete. Explore marketing and CRM to keep growing.';
+    document.getElementById('fosNextCta').textContent = 'Explore growth →';
+  }
+
+  // stack
+  var stackHtml='';
+  [['Domain','domain'],['Website','website'],['Email','email'],['Banking','banking'],['Accounting','accounting'],['Payments','payments']].forEach(function(p){
+    var it = S.stack[p[1]];
+    var right = (it && it.tool)
+      ? '<span class="v">'+it.tool+' <span class="fos-check">✓</span></span>'
+      : '<a class="pick'+(p[1]===nextId?'':' muted')+'" href="/assistant?decision='+p[1]+'">'+(p[1]===nextId?'+ Pick now':'Not selected')+'</a>';
+    stackHtml += '<div class="fos-row"><span class="k">'+p[0]+'</span>'+right+'</div>';
+  });
+  document.getElementById('fosStack').innerHTML = stackHtml;
+
+  // savings
+  var sHtml='';
+  saveLines.forEach(function(l){ sHtml += '<div class="fos-row"><span class="k">'+l.label+'</span><span class="v fos-mono">'+fmt(l.amt)+' / yr</span></div>'; });
+  if(!saveLines.length) sHtml = '<div class="fos-note">Make your first decision to start tracking savings.</div>';
+  document.getElementById('fosSavings').innerHTML = sHtml;
+  document.getElementById('fosSaveTotal').textContent = fmt(total);
+
+  // saved comparisons
+  var savedHtml='';
+  (S.saved||[]).forEach(function(t){ savedHtml += '<div class="fos-row"><span class="v" style="font-weight:500">'+t+'</span><a class="pick" href="/assistant">↗</a></div>'; });
+  if(!(S.saved||[]).length) savedHtml = '<div class="fos-note">No saved comparisons yet.</div>';
+  document.getElementById('fosSaved').innerHTML = savedHtml;
+
+  // activity
+  var ICO = {compared:'⇄', committed:'✓', viewed:'👁', asked:'💬'};
+  var aHtml='';
+  (S.activity||[]).forEach(function(a){
+    aHtml += '<div class="fos-act"><span class="ico">'+(ICO[a.type]||'•')+'</span><div><div class="txt">'+a.txt+'</div><div class="when">'+a.when+'</div></div></div>';
+  });
+  if(!(S.activity||[]).length) aHtml = '<div class="fos-note">Your recent chats and decisions will appear here.</div>';
+  document.getElementById('fosActivity').innerHTML = aHtml;
+
+  // cookie banner (matches the rest of the site)
+  var cookie=document.getElementById('cookieBanner'); if(cookie) setTimeout(function(){cookie.classList.add('show');},1800);
+})();
+</script>
+</body>
+</html>
