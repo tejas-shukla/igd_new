@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Startup Roadmap – Your 10-Stage Launch Plan | Igotdomain</title>
+<meta name="description" content="Your personalised startup roadmap — ten stages from idea to growth, sequenced for your business type. Track progress, see what's next, and compare tools at every stage.">
+<link rel="canonical" href="https://igotdomain.com/roadmap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .rdm-wrap { max-width: 900px; margin: 0 auto; padding: 104px 24px 72px; }
+  .rdm-head { margin-bottom: 32px; }
+  .rdm-head h1 { font-family:var(--font-display); font-size:clamp(28px,4vw,42px); font-weight:800; letter-spacing:-1.5px; }
+  .rdm-head p  { color:var(--gray-500); margin-top:8px; font-size:16px; }
+  .rdm-progress-bar { display:flex; align-items:center; gap:14px; margin-top:20px; }
+  .rdm-track-outer  { flex:1; height:8px; background:var(--gray-100); border-radius:50px; overflow:hidden; }
+  .rdm-track-fill   { height:100%; background:linear-gradient(90deg,var(--teal-light),var(--teal)); border-radius:50px; width:0; transition:width 1.2s cubic-bezier(.16,1,.3,1); }
+  .rdm-pct { font-variant-numeric:tabular-nums; font-weight:700; color:var(--teal); min-width:36px; font-size:15px; }
+
+  /* Stage track */
+  .rdm-stage-scroll  { overflow-x:auto; padding-bottom:8px; margin-bottom:28px; }
+  .rdm-stage-track   { display:flex; align-items:flex-start; gap:0; min-width:max-content; padding:8px 2px; }
+  .rdm-stage-item    { display:flex; flex-direction:column; align-items:center; cursor:pointer; padding:0 2px; }
+  .rdm-connector     { width:36px; height:3px; background:var(--gray-200); margin-top:19px; flex-shrink:0; transition:background .3s; }
+  .rdm-connector.done{ background:var(--teal); }
+  .rdm-circle {
+    width:40px; height:40px; border-radius:50%; border:2.5px solid var(--gray-200);
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; color:var(--gray-400);
+    transition:all .25s; background:#fff; flex-shrink:0;
+  }
+  .rdm-circle.done   { background:var(--teal); border-color:var(--teal); color:#fff; }
+  .rdm-circle.active { border-color:var(--teal); color:var(--teal); box-shadow:0 0 0 4px var(--teal-subtle); }
+  .rdm-circle.next   { border-color:var(--teal); color:var(--teal); }
+  .rdm-stage-label   { font-size:11px; font-weight:600; color:var(--gray-500); margin-top:7px; text-align:center; max-width:60px; }
+  .rdm-stage-label.active { color:var(--teal-dark); }
+
+  /* Detail card */
+  .rdm-detail {
+    background:#fff; border:1.5px solid rgba(13,148,136,0.18);
+    border-radius:18px; padding:28px; box-shadow:var(--shadow);
+    animation: rdmIn .35s cubic-bezier(.16,1,.3,1);
+  }
+  @keyframes rdmIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .rdm-detail-top   { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+  .rdm-stage-num    { font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--gray-400); margin-bottom:4px; }
+  .rdm-detail h2    { font-family:var(--font-display); font-size:24px; font-weight:800; letter-spacing:-0.5px; }
+  .rdm-badge        { font-size:12px; font-weight:600; padding:4px 12px; border-radius:50px; white-space:nowrap; }
+  .rdm-badge.done   { background:var(--teal-subtle); color:var(--teal-dark); }
+  .rdm-badge.next   { background:#EDE9FE; color:#5B21B6; }
+  .rdm-badge.todo   { background:var(--gray-100); color:var(--gray-500); }
+  .rdm-why { background:var(--gray-50); border-radius:12px; padding:14px 16px; margin-bottom:18px; }
+  .rdm-why .label   { font-size:11px; font-weight:700; color:var(--teal); letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+  .rdm-why p        { font-size:14px; color:var(--gray-700); line-height:1.55; }
+  .rdm-picks        { margin-bottom:20px; }
+  .rdm-picks .label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gray-400); margin-bottom:10px; }
+  .rdm-picks-grid   { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .rdm-pick-card    { border:1.5px solid var(--gray-200); border-radius:10px; padding:12px 14px; }
+  .rdm-pick-name    { font-weight:700; font-size:14px; color:var(--gray-900); }
+  .rdm-pick-price   { font-size:12px; color:var(--gray-500); margin-top:2px; }
+  .rdm-actions      { display:flex; gap:10px; flex-wrap:wrap; }
+  @media(max-width:560px){ .rdm-picks-grid{ grid-template-columns:1fr; } .rdm-actions{ flex-direction:column; } }
+</style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <div class="nav-links">
+    <a href="/how-it-works">How It Works</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/roadmap" class="active">Roadmap</a>
+    <a href="/assistant">AI Assistant</a>
+    <a href="/blog">Blog</a>
+  </div>
+  <a href="/assistant" class="nav-cta">AI Assistant →</a>
+</nav>
+
+<main class="rdm-wrap">
+  <div class="rdm-head">
+    <p class="section-label">Your journey</p>
+    <h1>Startup Roadmap</h1>
+    <p id="rdmSubline">Ten stages from idea to growth — tailored to your progress.</p>
+    <div class="rdm-progress-bar">
+      <div class="rdm-track-outer"><div class="rdm-track-fill" id="rdmFill"></div></div>
+      <span class="rdm-pct" id="rdmPct">0%</span>
+    </div>
+  </div>
+
+  <div class="rdm-stage-scroll">
+    <div class="rdm-stage-track" id="rdmTrack"></div>
+  </div>
+
+  <div id="rdmDetail"></div>
+</main>
+
+<a href="/dashboard" class="float-chat" aria-label="Go to dashboard">
+  <span class="float-tooltip">View dashboard 📊</span>
+  <span class="float-btn">📊</span>
+</a>
+<div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept All</button><button class="cookie-btn cookie-reject" onclick="closeCookie()">Reject Non-Essential</button></div></div>
+
+<script src="app.js"></script>
+<script>
+var STAGES = [
+  { id:'idea',       pos:1,  label:'Idea',       cat:null,         icon:'💡',
+    why:'You\'ve already taken this step — validating that your idea is worth pursuing is the foundation everything else builds on.',
+    picks:[] },
+  { id:'branding',   pos:2,  label:'Branding',   cat:null,         icon:'🎨',
+    why:'Settle on a name and basic visual identity before you register a domain — changing your brand later costs more than getting it right now.',
+    picks:[{name:'Looka',price:'$20 one-off'},{name:'Canva',price:'Free / $15/mo'}] },
+  { id:'domain',     pos:3,  label:'Domain',     cat:'domain',     icon:'🌐',
+    why:'Lock in your name before someone else does. Flat-renewal registrars (Cloudflare, Porkbun) save you the most long-term.',
+    picks:[{name:'Porkbun',price:'From $9/yr'},{name:'Cloudflare',price:'From $10/yr'}] },
+  { id:'website',    pos:4,  label:'Website',    cat:'website',    icon:'🏗️',
+    why:'Get a site live before you start outreach — even a one-pager builds more credibility than a social link.',
+    picks:[{name:'Framer',price:'$15/mo'},{name:'Webflow',price:'$14/mo'}] },
+  { id:'email',      pos:5,  label:'Email',      cat:'email',      icon:'📧',
+    why:'Branded email at your domain is the cheapest trust signal you can get. Do this before your first cold email.',
+    picks:[{name:'Google Workspace',price:'$6/user/mo'},{name:'Microsoft 365',price:'$5/user/mo'}] },
+  { id:'banking',    pos:6,  label:'Banking',    cat:'banking',    icon:'🏦',
+    why:'Open a business account before your first sale — keeping finances separate from day one saves hours at tax time.',
+    picks:[{name:'Tide',price:'Free'},{name:'Starling',price:'Free'}] },
+  { id:'accounting', pos:7,  label:'Accounting', cat:'accounting', icon:'📒',
+    why:'Connect accounting software once money starts moving. Trying to untangle 12 months of mixed transactions is painful.',
+    picks:[{name:'Wave',price:'Free'},{name:'Xero',price:'$20/mo'}] },
+  { id:'payments',   pos:8,  label:'Payments',   cat:'payments',   icon:'💳',
+    why:'Start taking payments with a processor built for your model. SaaS → Stripe or Paddle. Ecommerce → Shopify Payments.',
+    picks:[{name:'Stripe',price:'1.5% + 20p'},{name:'Paddle',price:'5% MoR'}] },
+  { id:'marketing',  pos:9,  label:'Marketing',  cat:'marketing',  icon:'📣',
+    why:'Set up email capture and basic analytics before launch so you have data from your very first visitor.',
+    picks:[{name:'Mailchimp',price:'Free / $13/mo'},{name:'PostHog',price:'Free'}] },
+  { id:'growth',     pos:10, label:'Growth',     cat:null,         icon:'🚀',
+    why:'When you\'re ready to scale — double down on what\'s working, systematise your ops, and expand the team thoughtfully.',
+    picks:[] }
+];
+
+var CAT_TO_STAGE = {
+  idea:'idea', domain:'domain', website:'website',
+  email:'email', banking:'banking', accounting:'accounting',
+  payments:'payments', marketing:'marketing'
+};
+
+function loadState(){
+  try{ var s=JSON.parse(localStorage.getItem('igd_state')); return s||{}; }catch(e){ return {}; }
+}
+
+function stagePercent(stg, stack){
+  if(!stack) return 0;
+  if(stg.cat && stack[stg.cat] && stack[stg.cat].done) return 100;
+  if(stg.id==='idea' && stack.idea && stack.idea.done) return 100;
+  if(stg.id==='branding' && stack.idea && stack.idea.done) return 50;
+  if(stg.id==='growth') return 0;
+  return 0;
+}
+
+var activeIdx = 0;
+
+function render(){
+  var st = loadState();
+  var stack = st.stack || {};
+
+  var doneCount = 0;
+  STAGES.forEach(function(s){ if(stagePercent(s,stack)===100) doneCount++; });
+  var overall = Math.round((doneCount/STAGES.length)*100);
+  document.getElementById('rdmPct').textContent = overall+'%';
+  setTimeout(function(){ document.getElementById('rdmFill').style.width=overall+'%'; },120);
+
+  if(st.name) document.getElementById('rdmSubline').textContent =
+    'Ten stages from idea to growth — '+st.name+'\'s personalised roadmap.';
+
+  /* Find first incomplete stage as default */
+  activeIdx = STAGES.findIndex(function(s){ return stagePercent(s,stack)<100; });
+  if(activeIdx<0) activeIdx=STAGES.length-1;
+
+  buildTrack(stack);
+  showDetail(activeIdx, stack);
+}
+
+function buildTrack(stack){
+  var track = document.getElementById('rdmTrack');
+  track.innerHTML='';
+  STAGES.forEach(function(s,i){
+    var pct = stagePercent(s,stack);
+    var isActive = i===activeIdx;
+    var isNext = (pct===0) && (i===STAGES.findIndex(function(x){ return stagePercent(x,stack)<100; }));
+
+    var item=document.createElement('div'); item.className='rdm-stage-item';
+    item.onclick=function(){ activeIdx=i; buildTrack(stack); showDetail(i,stack); };
+
+    var circleClass='rdm-circle'+(pct===100?' done':isActive?' active':isNext?' next':'');
+    item.innerHTML='<div class="'+circleClass+'">'+
+      (pct===100?'✓':(isActive?s.pos:s.pos))+'</div>'+
+      '<div class="rdm-stage-label'+(isActive?' active':'')+'">'+s.label+'</div>';
+    track.appendChild(item);
+
+    if(i<STAGES.length-1){
+      var conn=document.createElement('div');
+      conn.className='rdm-connector'+(pct===100?' done':'');
+      track.appendChild(conn);
+    }
+  });
+}
+
+function showDetail(idx, stack){
+  var s=STAGES[idx];
+  var pct=stagePercent(s,stack);
+  var isNext=(pct===0)&&(idx===STAGES.findIndex(function(x){ return stagePercent(x,stack)<100; }));
+  var status = pct===100 ? {label:'✓ Complete',cls:'done'} : isNext ? {label:'● Recommended next',cls:'next'} : {label:'Upcoming',cls:'todo'};
+  var assistantHref = s.cat ? '/assistant?decision='+s.cat : '/assistant';
+
+  var picksHtml='';
+  if(s.picks && s.picks.length){
+    picksHtml='<div class="rdm-picks"><div class="label">Top picks for your profile</div><div class="rdm-picks-grid">';
+    s.picks.forEach(function(p){
+      picksHtml+='<div class="rdm-pick-card"><div class="rdm-pick-name">'+p.name+'</div><div class="rdm-pick-price">'+p.price+'</div></div>';
+    });
+    picksHtml+='</div></div>';
+  }
+
+  var actionsHtml = pct===100
+    ? '<span style="color:var(--teal);font-weight:600;font-size:14px">✓ Done — nothing more to decide here for now.</span>'
+    : '<a href="'+assistantHref+'" class="btn-primary btn-sm">Compare '+s.label+' options →</a>'+
+      '<a href="/dashboard" class="btn-secondary btn-sm">Back to dashboard</a>';
+
+  document.getElementById('rdmDetail').innerHTML=
+    '<div class="rdm-detail">'+
+      '<div class="rdm-detail-top">'+
+        '<div><div class="rdm-stage-num">Stage '+s.pos+' of '+STAGES.length+'</div><h2>'+s.icon+' '+s.label+'</h2></div>'+
+        '<span class="rdm-badge '+status.cls+'">'+status.label+'</span>'+
+      '</div>'+
+      '<div class="rdm-why"><div class="label">Why now</div><p>'+s.why+'</p></div>'+
+      picksHtml+
+      '<div class="rdm-actions">'+actionsHtml+'</div>'+
+    '</div>';
+}
+
+render();
+var cookie=document.getElementById('cookieBanner'); if(cookie) setTimeout(function(){ cookie.classList.add('show'); },1800);
+</script>
+</body>
+</html>

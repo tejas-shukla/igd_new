@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saved Comparisons – Your Research Library | Igotdomain</title>
+<meta name="description" content="All your saved tool comparisons in one place. Resume any comparison or start a new one with the Igotdomain AI assistant.">
+<link rel="canonical" href="https://igotdomain.com/comparisons">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .cpl-wrap  { max-width:800px; margin:0 auto; padding:104px 24px 72px; }
+  .cpl-head  { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; margin-bottom:32px; }
+  .cpl-head h1 { font-family:var(--font-display); font-size:clamp(26px,3.5vw,38px); font-weight:800; letter-spacing:-1px; }
+  .cpl-grid  { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .cpl-card  { background:#fff; border:1.5px solid rgba(13,148,136,0.15); border-radius:14px; padding:20px 22px; box-shadow:var(--shadow); display:flex; flex-direction:column; gap:10px; transition:border-color .2s,box-shadow .2s; }
+  .cpl-card:hover { border-color:var(--teal); box-shadow:var(--shadow-lg); }
+  .cpl-ico   { font-size:24px; }
+  .cpl-title { font-weight:700; font-size:16px; color:var(--gray-900); }
+  .cpl-cat   { font-size:12px; color:var(--gray-400); text-transform:capitalize; }
+  .cpl-resume{ margin-top:4px; display:inline-flex; align-items:center; gap:5px; color:var(--teal); font-weight:600; font-size:13px; text-decoration:none; }
+  /* empty state */
+  .cpl-empty { text-align:center; padding:64px 24px; }
+  .cpl-empty .ico { font-size:48px; margin-bottom:16px; }
+  .cpl-empty h2 { font-family:var(--font-display); font-size:22px; font-weight:700; color:var(--gray-900); margin-bottom:8px; }
+  .cpl-empty p  { color:var(--gray-500); font-size:15px; max-width:380px; margin:0 auto 24px; }
+  @media(max-width:560px){ .cpl-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <div class="nav-links">
+    <a href="/how-it-works">How It Works</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/roadmap">Roadmap</a>
+    <a href="/assistant">AI Assistant</a>
+    <a href="/blog">Blog</a>
+  </div>
+  <a href="/assistant" class="nav-cta">AI Assistant →</a>
+</nav>
+
+<main class="cpl-wrap">
+  <div class="cpl-head">
+    <div>
+      <p class="section-label">Research library</p>
+      <h1>Saved Comparisons</h1>
+    </div>
+    <a href="/assistant" class="btn-primary btn-sm">+ New comparison</a>
+  </div>
+  <div id="cplContent"></div>
+</main>
+
+<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Start a comparison 🤖</span><span class="float-btn">🤖</span></a>
+<div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept</button></div></div>
+
+<script src="app.js"></script>
+<script>
+var CAT_ICONS = { domain:'🌐', website:'🏗️', banking:'🏦', accounting:'📒', payments:'💳', email:'📧', marketing:'📣', default:'⇄' };
+var CAT_LABELS = { domain:'Domain', website:'Website Builder', banking:'Business Banking', accounting:'Accounting', payments:'Payments', email:'Email', marketing:'Marketing' };
+
+function detectCat(title){
+  var t=title.toLowerCase();
+  if(/domain|\.com|\.io|porkbun|namecheap|cloudflare/.test(t)) return 'domain';
+  if(/wix|webflow|shopify|framer|squarespace|website|builder/.test(t)) return 'website';
+  if(/bank|tide|revolut|starling|mercury|wise/.test(t)) return 'banking';
+  if(/accounting|xero|wave|quickbooks|freeagent|freshbooks/.test(t)) return 'accounting';
+  if(/stripe|paddle|payment/.test(t)) return 'payments';
+  if(/email|workspace|outlook|microsoft/.test(t)) return 'email';
+  return 'default';
+}
+
+function loadComparisons(){
+  try{ var s=JSON.parse(localStorage.getItem('igd_state')); return (s&&s.saved)||[]; }catch(e){ return []; }
+}
+
+function render(){
+  var saved=loadComparisons();
+  var el=document.getElementById('cplContent');
+
+  if(!saved.length){
+    el.innerHTML='<div class="cpl-empty">'+
+      '<div class="ico">🔍</div>'+
+      '<h2>No saved comparisons yet</h2>'+
+      '<p>Every comparison you run in the AI assistant is automatically saved here for easy reference.</p>'+
+      '<a href="/assistant" class="btn-primary">Start your first comparison →</a>'+
+      '</div>';
+    return;
+  }
+
+  var html='<div class="cpl-grid">';
+  saved.forEach(function(title){
+    var cat=detectCat(title);
+    var ico=CAT_ICONS[cat]||CAT_ICONS.default;
+    var catLabel=CAT_LABELS[cat]||'Comparison';
+    var href='/assistant?q='+encodeURIComponent(title);
+    html+='<div class="cpl-card">'+
+      '<div class="cpl-ico">'+ico+'</div>'+
+      '<div class="cpl-title">'+title+'</div>'+
+      '<div class="cpl-cat">'+catLabel+'</div>'+
+      '<a class="cpl-resume" href="'+href+'">Resume comparison →</a>'+
+      '</div>';
+  });
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+render();
+var cookie=document.getElementById('cookieBanner'); if(cookie) setTimeout(function(){ cookie.classList.add('show'); },1800);
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Founder Profile – Your Startup Identity | Igotdomain</title>
+<meta name="description" content="Your Igotdomain founder profile — manage your business details, startup stack, and savings in one place.">
+<link rel="canonical" href="https://igotdomain.com/profile">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .prf-wrap   { max-width:860px; margin:0 auto; padding:104px 24px 72px; }
+  .prf-hero   { display:flex; align-items:center; gap:20px; margin-bottom:36px; }
+  .prf-avatar { width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg,var(--teal-light),var(--teal-dark)); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:800; color:#fff; flex-shrink:0; }
+  .prf-hero h1 { font-family:var(--font-display); font-size:clamp(24px,3.5vw,34px); font-weight:800; letter-spacing:-1px; }
+  .prf-hero p  { color:var(--gray-500); margin-top:4px; font-size:14px; }
+  .prf-grid   { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .prf-card   { background:#fff; border:1px solid rgba(13,148,136,0.14); border-radius:var(--radius); box-shadow:var(--shadow); padding:24px; }
+  .prf-card.full { grid-column:1/-1; }
+  .prf-card-title { font-size:11px; font-weight:700; letter-spacing:1.4px; text-transform:uppercase; color:var(--gray-400); margin-bottom:16px; }
+  .prf-note  { font-size:12px; color:var(--gray-400); margin-bottom:16px; }
+  /* editable field rows */
+  .prf-field { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--gray-100); font-size:14px; }
+  .prf-field:last-child { border-bottom:0; }
+  .prf-field .k { color:var(--gray-500); }
+  .prf-field select {
+    border:none; outline:none; background:transparent;
+    font-family:var(--font-body); font-size:14px; font-weight:600;
+    color:var(--gray-900); cursor:pointer; text-align:right;
+    -webkit-appearance:none; appearance:none;
+    padding:4px 20px 4px 8px;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 0 center;
+    border-radius:6px;
+  }
+  .prf-field select:focus { background-color:var(--teal-subtle); }
+  /* stack rows */
+  .prf-row  { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid var(--gray-100); font-size:14px; }
+  .prf-row:last-child { border-bottom:0; }
+  .prf-row .k { color:var(--gray-500); }
+  .prf-row .v { font-weight:600; color:var(--gray-900); display:flex; align-items:center; gap:6px; }
+  .prf-check { color:var(--teal); }
+  .prf-pick  { color:var(--teal); font-weight:600; text-decoration:none; font-size:13px; }
+  /* savings */
+  .prf-save-total { margin-top:14px; padding-top:14px; border-top:1px solid var(--gray-100); display:flex; align-items:baseline; justify-content:space-between; }
+  .prf-save-big   { font-family:var(--font-display); font-size:30px; font-weight:800; color:var(--teal); letter-spacing:-1px; }
+  /* save toast */
+  .prf-toast { position:fixed; bottom:24px; right:24px; background:var(--teal); color:#fff; padding:10px 20px; border-radius:50px; font-size:13px; font-weight:600; box-shadow:var(--shadow-lg); opacity:0; transform:translateY(8px); transition:all .3s; pointer-events:none; z-index:200; }
+  .prf-toast.show { opacity:1; transform:translateY(0); }
+  @media(max-width:680px){ .prf-grid{ grid-template-columns:1fr; } .prf-card.full{ grid-column:1; } }
+</style>
+</head>
+<body>
+<nav aria-label="Main navigation">
+  <a href="/" class="nav-logo"><span class="logo-mark">🚀</span>Igot<span>domain</span></a>
+  <div class="nav-links">
+    <a href="/how-it-works">How It Works</a>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/roadmap">Roadmap</a>
+    <a href="/assistant">AI Assistant</a>
+    <a href="/blog">Blog</a>
+  </div>
+  <a href="/assistant" class="nav-cta">AI Assistant →</a>
+</nav>
+
+<main class="prf-wrap">
+  <div class="prf-hero">
+    <div class="prf-avatar" id="prfAvatar">?</div>
+    <div>
+      <h1 id="prfName">Your Founder Profile</h1>
+      <p id="prfSub">Built automatically from your chats — edit anything below.</p>
+    </div>
+  </div>
+
+  <div class="prf-grid">
+    <!-- Profile fields -->
+    <div class="prf-card">
+      <div class="prf-card-title">Founder Profile</div>
+      <p class="prf-note">Updated automatically as you chat. Affects every recommendation.</p>
+      <div id="prfFields"></div>
+    </div>
+
+    <!-- Startup stack -->
+    <div class="prf-card">
+      <div class="prf-card-title">Your Startup Stack</div>
+      <div id="prfStack"></div>
+    </div>
+
+    <!-- Savings -->
+    <div class="prf-card full">
+      <div class="prf-card-title">Savings Tracker</div>
+      <p class="prf-note">Estimated annual savings vs. going direct to each provider at mainstream pricing.</p>
+      <div id="prfSavings"></div>
+      <div class="prf-save-total">
+        <div>
+          <div style="font-weight:600;font-size:14px">Total saved per year</div>
+          <div style="font-size:11px;color:var(--gray-400);margin-top:2px">Grows as you commit more tools via the assistant</div>
+        </div>
+        <div class="prf-save-big" id="prfSaveTotal">£0</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="prf-toast" id="prfToast">✓ Saved</div>
+<a href="/assistant" class="float-chat" aria-label="Open assistant"><span class="float-tooltip">Ask AI assistant 🤖</span><span class="float-btn">🤖</span></a>
+<div class="cookie-banner" id="cookieBanner"><div class="cookie-text">We use cookies to save your progress. <a href="#">Cookie Policy</a></div><div class="cookie-actions"><button class="cookie-btn cookie-accept" onclick="closeCookie()">Accept</button></div></div>
+
+<script src="app.js"></script>
+<script>
+var FIELDS = [
+  { key:'country', label:'Country', options:[
+    {v:'GB',l:'United Kingdom'},{v:'US',l:'United States'},{v:'IE',l:'Ireland'},
+    {v:'AU',l:'Australia'},{v:'CA',l:'Canada'},{v:'DE',l:'Germany'},{v:'other',l:'Other'}] },
+  { key:'businessType', label:'Business type', options:[
+    {v:'saas',l:'SaaS'},{v:'ecommerce',l:'Ecommerce'},{v:'agency',l:'Agency'},
+    {v:'freelancer',l:'Freelancer'},{v:'marketplace',l:'Marketplace'},{v:'other',l:'Other'}] },
+  { key:'companyStage', label:'Stage', options:[
+    {v:'idea',l:'Idea'},{v:'building',l:'Building'},{v:'launched',l:'Launched'},{v:'scaling',l:'Scaling'}] },
+  { key:'teamSize', label:'Team size', options:[
+    {v:'solo',l:'Solo'},{v:'2_5',l:'2–5'},{v:'6_20',l:'6–20'},{v:'20_plus',l:'20+'}] },
+  { key:'budget', label:'Monthly budget', options:[
+    {v:'50',l:'Up to £50/mo'},{v:'100',l:'Up to £100/mo'},
+    {v:'250',l:'Up to £250/mo'},{v:'500',l:'Up to £500/mo'},{v:'1000',l:'£1,000+/mo'}] }
+];
+
+var STACK_LABELS = [
+  ['domain','Domain'],['website','Website'],['email','Email'],
+  ['banking','Banking'],['accounting','Accounting'],['payments','Payments']
+];
+
+function loadState(){
+  try{ var s=JSON.parse(localStorage.getItem('igd_state')); return s||{}; }catch(e){ return {}; }
+}
+function saveState(s){ try{ localStorage.setItem('igd_state',JSON.stringify(s)); }catch(e){} }
+
+function showToast(){
+  var t=document.getElementById('prfToast'); t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); },1800);
+}
+
+function render(){
+  var st=loadState();
+  var stack=st.stack||{};
+  var profile=st.profile||{};
+  var name=st.name||'Founder';
+
+  document.getElementById('prfAvatar').textContent=name.charAt(0).toUpperCase();
+  document.getElementById('prfName').textContent=name.charAt(0).toUpperCase()+name.slice(1)+'\'s Profile';
+
+  /* Profile fields */
+  var fHtml='';
+  FIELDS.forEach(function(f){
+    var val=profile[f.key]||f.options[0].v;
+    var opts=f.options.map(function(o){ return '<option value="'+o.v+'"'+(o.v===val?' selected':'')+'>'+o.l+'</option>'; }).join('');
+    fHtml+='<div class="prf-field"><span class="k">'+f.label+'</span>'+
+      '<select data-key="'+f.key+'">'+opts+'</select></div>';
+  });
+  document.getElementById('prfFields').innerHTML=fHtml;
+  document.getElementById('prfFields').querySelectorAll('select').forEach(function(sel){
+    sel.addEventListener('change',function(){
+      var st2=loadState(); if(!st2.profile) st2.profile={};
+      st2.profile[sel.getAttribute('data-key')]=sel.value;
+      saveState(st2); showToast();
+    });
+  });
+
+  /* Startup stack */
+  var sHtml='';
+  STACK_LABELS.forEach(function(p){
+    var item=stack[p[0]];
+    sHtml+='<div class="prf-row"><span class="k">'+p[1]+'</span>'+
+      (item&&item.tool
+        ?'<span class="v">'+item.tool+' <span class="prf-check">✓</span></span>'
+        :'<a class="prf-pick" href="/assistant?decision='+p[0]+'">+ Pick →</a>')+
+      '</div>';
+  });
+  document.getElementById('prfStack').innerHTML=sHtml;
+
+  /* Savings */
+  var lines=[['Domain','domain',55],['Website','website',48],['Software','accounting',24]];
+  var total=0; var lHtml='';
+  lines.forEach(function(l){
+    var item=stack[l[1]];
+    var amt=(item&&item.done)?(item.saved||l[2]):0;
+    if(amt){ lHtml+='<div class="prf-row"><span class="k">'+l[0]+'</span><span style="font-weight:600;font-variant-numeric:tabular-nums">£'+amt+' / yr</span></div>'; total+=amt; }
+  });
+  if(!lHtml) lHtml='<div style="font-size:13px;color:var(--gray-400)">Make your first decision in the assistant to start tracking savings.</div>';
+  document.getElementById('prfSavings').innerHTML=lHtml;
+  document.getElementById('prfSaveTotal').textContent='£'+total;
+}
+
+render();
+var cookie=document.getElementById('cookieBanner'); if(cookie) setTimeout(function(){ cookie.classList.add('show'); },1800);
+</script>
+</body>
+</html>
