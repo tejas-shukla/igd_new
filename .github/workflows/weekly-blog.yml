@@ -1,0 +1,45 @@
+name: Weekly Blog Generator
+ 
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # Every Monday at 8:00 AM UTC
+  workflow_dispatch:        # Also triggerable manually from GitHub Actions tab
+    inputs:
+      topic_override:
+        description: 'Force a specific topic (optional, e.g. "stripe vs paddle")'
+        required: false
+        default: ''
+ 
+jobs:
+  generate-blog:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # Needed to commit the new article + updated blog.html
+ 
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+ 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+ 
+      - name: Install dependencies
+        run: pip install anthropic requests python-slugify
+ 
+      - name: Generate blog article
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOPIC_OVERRIDE: ${{ github.event.inputs.topic_override }}
+          REPO: ${{ github.repository }}
+        run: python scripts/generate_blog.py
+ 
+      - name: Commit new article
+        run: |
+          git config user.name "IGotDomain Blog Bot"
+          git config user.email "bot@igotdomain.com"
+          git add public/article-*.html public/blog.html scripts/published_topics.json
+          git diff --staged --quiet || git commit -m "🤖 Weekly blog: $(cat /tmp/article_title.txt)"
+          git push
