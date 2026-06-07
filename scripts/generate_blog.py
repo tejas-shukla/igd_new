@@ -105,7 +105,7 @@ def research_topic(client, query):
     """Use Claude + web search to find the current angle on the topic."""
     print(f"  Researching: {query}")
     resp = client.messages.create(
-        model="claude-opus-4-5",
+        model="claude-sonnet-4-6",
         max_tokens=1500,
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
         messages=[{
@@ -125,101 +125,129 @@ def research_topic(client, query):
     )
     text = ''.join(b.text for b in resp.content if hasattr(b, 'text'))
     try:
-        return json.loads(text)
-    except:
-        # Fallback if JSON extraction fails
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        return json.loads(match.group()) if match else {
+        return _safe_json(text)
+    except Exception:
+        return {
             'title': query.title(),
             'primary_keyword': query,
             'secondary_keywords': [],
-            'key_findings': ['Information researched from current sources.'],
+            'key_findings': ['Current information researched from live sources.'],
             'angle': 'Founder-focused practical guide.',
-            'word_count_target': 1000,
         }
  
 # ─────────────────────────────────────────────────────────────────────────────
-ARTICLE_SYSTEM = """You are a senior content strategist for IGotDomain — a platform that helps 
-founders compare and choose every tool they need to start a business (domains, website builders, 
-business banking, accounting, payments, email, marketing, CRM).
+ARTICLE_BODY_SYSTEM = """You are a senior content strategist for IGotDomain — a platform helping
+founders compare and choose every tool they need to start a business.
  
-BRAND VOICE: Practical, warm, founder-to-founder. Premium but not corporate. Direct. No buzzwords.
+BRAND VOICE: Practical, warm, founder-to-founder. Direct. No buzzwords.
 Write like a knowledgeable friend who has done the research so the founder doesn't have to.
  
 SEO RULES:
-- H1 = primary keyword (near-exact match)
 - First paragraph must contain the primary keyword naturally
 - Use secondary keywords once each in H2 headings or early paragraphs
-- Never keyword-stuff. One keyword per sentence maximum.
 - Each article must have 6-8 H2 sections with clear, searchable headings
-- Include a TL;DR / quick-answer section near the top (Google featured snippet bait)
-- Total length: match the word_count_target
+- Include a short TL;DR section near the top (2-3 bullet points — Google featured snippet bait)
  
-INTERNAL LINKS (use these naturally, in context, as <a href="..."> tags):
-- /assistant — the AI tool for comparisons ("compare in our AI assistant")
-- /roadmap — the 10-stage startup roadmap
-- /dashboard — the founder dashboard
-- /assistant?decision=banking — for banking decisions (replace with relevant category)
-- /assistant?decision=domain — for domain decisions
-- /assistant?decision=website — for website builder decisions
-- /assistant?decision=accounting — for accounting decisions
-- /assistant?decision=payments — for payments decisions
-- /assistant?decision=email — for email decisions
+INTERNAL LINKS — use naturally as <a href="..."> tags:
+- /assistant?decision=banking, /assistant?decision=domain, /assistant?decision=website,
+  /assistant?decision=accounting, /assistant?decision=payments, /assistant?decision=email
  
-ARTICLE-CTA SECTIONS: Include 2-3 throughout the article using this exact HTML:
+ARTICLE-CTA SECTIONS — include 2-3 using this exact HTML:
 <div class="article-cta">
-<h3>Relevant CTA heading</h3>
-<p>One sentence explaining the value.</p>
+<h3>CTA heading here</h3>
+<p>One sentence of value.</p>
 <a href="/assistant?decision=CATEGORY" class="btn-primary">Compare OPTIONS free →</a>
 </div>
  
-OUTPUT: Return a single JSON object with:
-- slug: URL-friendly filename slug (e.g. "stripe-vs-paddle-saas-2026")
-- meta_title: SEO title tag (55-60 chars)
-- meta_description: meta description (145-158 chars)
-- tag: category tag (e.g. "Payments", "Domains", "Banking")
-- h1: the article H1 (primary keyword)
-- article_body_html: the full article body as HTML
-  - Use <h2>, <p>, <ul>/<li>, <blockquote>, <strong> tags
-  - Include the article-cta divs
-  - DO NOT include <html>, <head>, <body>, <nav>, <footer>, <article> wrappers
-  - Start from the first <p> and end at the last </div> of the last article-cta
-- read_time_minutes: integer
+OUTPUT: Return ONLY raw HTML starting with <p> — no JSON, no markdown fences, no wrappers.
+Use <h2>, <p>, <ul>/<li>, <blockquote>, <strong> tags only."""
  
-Return ONLY the JSON, no markdown fences."""
  
-def write_article(client, research, category):
-    """Ask Claude to write the full article body."""
-    print(f"  Writing article: {research['title']}")
-    prompt = f"""Write a founder-focused SEO article for IGotDomain.
- 
-TOPIC RESEARCH:
-{json.dumps(research, indent=2)}
- 
-CATEGORY: {category}
- 
-Follow all brand voice, SEO, and internal linking rules from your system prompt.
-Produce the full article body HTML as specified.
-Return ONLY the JSON object."""
- 
-    resp = client.messages.create(
-        model="claude-opus-4-5",
-        max_tokens=4000,
-        system=ARTICLE_SYSTEM,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    text = ''.join(b.text for b in resp.content if hasattr(b, 'text'))
-    # Strip markdown fences if present
-    text = re.sub(r'^```(?:json)?\s*', '', text.strip())
-    text = re.sub(r'\s*```$', '', text.strip())
+def _safe_json(text):
+    """Parse JSON robustly, stripping fences and trying multiple strategies."""
+    text = text.strip()
+    text = re.sub(r'^```(?:json)?\s*', '', text)
+    text = re.sub(r'\s*```$', '', text)
+    # Try direct parse
     try:
         return json.loads(text)
-    except json.JSONDecodeError as e:
-        # Try to extract JSON block
-        match = re.search(r'\{.*\}', text, re.DOTALL)
-        if match:
+    except json.JSONDecodeError:
+        pass
+    # Try extracting first {...} block
+    match = re.search(r'\{[^{}]*\}', text, re.DOTALL)
+    if match:
+        try:
             return json.loads(match.group())
-        raise RuntimeError(f"Could not parse article JSON: {e}\n\nRaw:\n{text[:500]}")
+        except json.JSONDecodeError:
+            pass
+    raise ValueError(f"Could not parse JSON from response:\n{text[:300]}")
+ 
+ 
+def write_article(client, research, category):
+    """
+    Two separate API calls to avoid JSON-parsing failures caused by
+    HTML special characters embedded inside JSON string values.
+ 
+    Call 1 → metadata only (short strings, safe JSON)
+    Call 2 → article body HTML (returned as plain text, no JSON wrapper)
+    """
+    title = research.get('title', category)
+    keyword = research.get('primary_keyword', title)
+    secondary = ', '.join(research.get('secondary_keywords', []))
+    findings = '\n'.join(f'- {f}' for f in research.get('key_findings', []))
+ 
+    # ── Call 1: metadata (small, safe JSON) ──────────────────────────────
+    print(f"  Getting metadata for: {title}")
+    meta_resp = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=400,
+        messages=[{"role": "user", "content": f"""Return ONLY a JSON object (no markdown) with these fields for an IGotDomain blog article:
+ 
+Topic: {title}
+Category: {category}
+Primary keyword: {keyword}
+ 
+Fields needed:
+- slug: short URL slug, lowercase hyphens, max 60 chars (e.g. "stripe-vs-paddle-2026")
+- meta_title: 55-60 char SEO page title
+- meta_description: 145-158 char meta description
+- tag: one of: Domains, Website Builders, Banking, Accounting, Payments, AI Tools, Marketing, Email, CRM, Startup Strategy
+- h1: article headline (close to primary keyword)
+- read_time_minutes: integer 7-12
+ 
+Return ONLY the JSON object, nothing else."""}]
+    )
+    meta_text = ''.join(b.text for b in meta_resp.content if hasattr(b, 'text'))
+    meta = _safe_json(meta_text)
+    print(f"  Metadata OK: {meta.get('h1', '?')}")
+ 
+    # ── Call 2: article body HTML (plain text, no JSON) ───────────────────
+    print(f"  Writing article body...")
+    body_resp = client.messages.create(
+        model="claude-sonnet-4-6",
+        max_tokens=3500,
+        system=ARTICLE_BODY_SYSTEM,
+        messages=[{"role": "user", "content": f"""Write a founder-focused SEO article body.
+ 
+H1: {meta.get('h1', title)}
+Primary keyword: {keyword}
+Secondary keywords: {secondary}
+Category: {category}
+ 
+Key facts to include:
+{findings}
+ 
+Return ONLY the raw HTML body (start with <p>, end with last </div>).
+No JSON. No markdown. No wrappers. Just the HTML."""}]
+    )
+    body_html = ''.join(b.text for b in body_resp.content if hasattr(b, 'text')).strip()
+    # Strip any accidental markdown fences
+    body_html = re.sub(r'^```(?:html)?\s*', '', body_html)
+    body_html = re.sub(r'\s*```$', '', body_html)
+    print(f"  Body HTML: {len(body_html):,} chars")
+ 
+    meta['article_body_html'] = body_html
+    return meta
  
 # ─────────────────────────────────────────────────────────────────────────────
 ARTICLE_TEMPLATE = '''\
